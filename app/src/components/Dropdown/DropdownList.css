@@ -1,0 +1,34 @@
+.dropdown {
+  margin-top: 1em;
+}
+
+.dropdown-toggle {
+  width: 230px;
+  padding-left: 12px;
+  padding-right: 0;
+  text-align: left;
+}
+
+.dropdown-toggle::after {
+  position: absolute;
+  width: 10px;
+  left: 205px;
+  top: 17px;
+  margin-left: 0;
+}
+
+.dropdown-menu {
+  width: 230px;
+}
+
+.input-category {
+  width: 100%;
+  padding: 0.25rem 12px;
+  border: none;
+}
+
+.dropdown-item:hover,
+.input-category:hover {
+  cursor: pointer;
+  background: rgb(185, 182, 182);
+}

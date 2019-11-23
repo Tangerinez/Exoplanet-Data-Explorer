@@ -1,0 +1,8 @@
+.navBar-container {
+  background: rgb(18, 18, 18);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  width: 100%;
+  color: white;
+  padding: 1em 0 1em 16px;
+  font-size: 16px;
+}
