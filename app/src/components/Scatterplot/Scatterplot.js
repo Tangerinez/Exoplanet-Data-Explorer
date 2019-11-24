@@ -1,16 +1,9 @@
 import React from "react";
 import "./Scatterplot.css";
 import * as d3 from "d3";
-import data from "../../data/Exoplanet.csv";
 
 class Scatterplot extends React.Component {
-  state = {
-    data: ""
-  };
   componentDidMount() {
-    d3.csv(data, function(data) {
-      console.log(data);
-    });
     this.drawAxis();
   }
 
@@ -27,7 +20,6 @@ class Scatterplot extends React.Component {
   };
 
   render() {
-    console.log(data);
     return (
       <div className="scatterplot-container">
         {this.props.categoryX} vs. {this.props.categoryY}
