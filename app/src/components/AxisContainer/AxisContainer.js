@@ -24,12 +24,19 @@ class AxisContainer extends React.Component {
   render() {
     return (
       <div className="axis-container">
-        <Axis title="X-Axis" startingCategory="Action" />
+        <Axis
+          title="X-Axis"
+          startingCategory={this.props.categoryX}
+          handleCategoryX={this.props.handleCategoryX}
+          xAxis={true}
+        />
         <Axis
           title="Y-Axis"
-          startingCategory="Something Else"
+          startingCategory={this.props.categoryY}
           leftBorderStyle={this.state.leftBorderStyle}
           isDesktop={this.state.isDesktop}
+          handleCategoryY={this.props.handleCategoryY}
+          xAxis={false}
         />
       </div>
     );

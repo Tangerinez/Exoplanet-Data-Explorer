@@ -1,13 +1,13 @@
 import React from "react";
 import Navbar from "./components/Navbar/Navbar";
-import AxisContainer from "./components/AxisContainer/AxisContainer";
+import Body from "./components/Body/Body";
 import "./App.css";
 
 function App() {
   return (
     <div className="app">
       <Navbar />
-      <AxisContainer />
+      <Body />
     </div>
   );
 }

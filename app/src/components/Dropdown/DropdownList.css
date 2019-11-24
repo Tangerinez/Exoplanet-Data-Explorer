@@ -19,6 +19,8 @@
 
 .dropdown-menu {
   width: 230px;
+  height: 202px;
+  overflow-y: scroll;
 }
 
 .input-category {
