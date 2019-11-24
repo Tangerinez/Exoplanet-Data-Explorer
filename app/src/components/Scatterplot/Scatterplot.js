@@ -10,9 +10,8 @@ class Scatterplot extends React.Component {
   drawAxis = data => {
     const canvasHeight = 400;
     const canvasWidth = "100%";
-    const scale = 20;
-    const svgCanvas = d3 // svgCanvas is the black box the graph will be in
-      .select(this.refs.canvas)
+    // const scale = 20;
+    /*const svgCanvas = */ d3.select(this.refs.canvas) // svgCanvas is the black box the graph will be in
       .append("svg")
       .attr("width", canvasWidth)
       .attr("height", canvasHeight)

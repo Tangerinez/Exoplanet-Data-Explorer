@@ -9,11 +9,14 @@ class Body extends React.Component {
     categoryX: "P. Min Mass (EU)",
     categoryY: "P. Mass (EU)",
     planetName: "1RXS 1609 b",
-    data: []
+    data: null,
+    xAxisData: null,
+    yAxisData: null
   };
+
   componentDidMount() {
-    d3.csv(data).then(function(data) {
-      data.forEach(function(d) {
+    d3.csv(data).then(data => {
+      data.forEach(d => {
         d["P. Appar Size (deg)"] = +d["P. Appar Size (deg)"];
         d["P. Density (EU)"] = +d["P. Density (EU)"];
         d["P. ESI"] = +d["P. ESI"];
@@ -24,6 +27,7 @@ class Body extends React.Component {
         d["P. HZC"] = +d["P. HZC"];
         d["P. HZD"] = +d["P. HZD"];
         d["P. HZI"] = +d["P. HZI"];
+        d["P. Min Mass (EU)"] = +d["P. Min Mass (EU)"];
         d["P. Mag"] = +d["P. Mag"];
         d["P. Mass (EU)"] = +d["P. Mass (EU)"];
         d["P. Mean Distance (AU)"] = +d["P. Mean Distance (AU)"];
@@ -48,9 +52,23 @@ class Body extends React.Component {
         d["S. Size from Planet (deg)"] = +d["S. Size from Planet (deg)"];
         d["S. Teff (K)"] = +d["S. Teff (K)"];
       });
-      console.log(data);
+      this.updateData(data);
     });
   }
+
+  updateData = result => {
+    let xStartingData = [];
+    let yStartingData = [];
+    for (var i = 0; i < result.length; i++) {
+      xStartingData.push(result[i]["P. Min Mass (EU)"]);
+      yStartingData.push(result[i]["P. Mass (EU)"]);
+    }
+    this.setState({
+      data: result,
+      xAxisData: xStartingData,
+      yAxisData: yStartingData
+    });
+  };
 
   handleCategoryX = event => {
     this.setState({
@@ -65,7 +83,9 @@ class Body extends React.Component {
   };
 
   render() {
-    console.log(data);
+    console.log(this.state.data);
+    console.log(this.state.xAxisData);
+    console.log(this.state.yAxisData);
     return (
       <div>
         <AxisContainer
