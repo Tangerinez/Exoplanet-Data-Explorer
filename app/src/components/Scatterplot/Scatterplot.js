@@ -121,7 +121,7 @@ class Scatterplot extends React.Component {
       dividedUnitY += "1";
     } else {
       decimalUnitY += "10";
-      dividedUnitY += "*0.1";
+      dividedUnitY += "0.1";
     }
 
     var yMax = Math.max(...scaledYData);
