@@ -8,13 +8,7 @@ class Body extends React.Component {
   state = {
     categoryX: "P. Min Mass (EU)",
     categoryY: "P. Mass (EU)",
-    planetName: "1RXS 1609 b",
     data: [],
-    pooledXYData: [
-      [1, 1],
-      [2, 2],
-      [3, 3]
-    ],
     planetNames: [],
     xAxisData: [1, 2, 3],
     yAxisData: [1, 2, 3]
@@ -111,9 +105,7 @@ class Body extends React.Component {
     for (var i = 0; i < this.state.data.length; i++) {
       xAxisData.push(this.state.data[i][`${this.state.categoryX}`]);
     }
-    this.setState({ xAxisData: xAxisData }, () => {
-      this.poolData();
-    });
+    this.setState({ xAxisData: xAxisData });
   };
 
   updateY = () => {
@@ -121,26 +113,10 @@ class Body extends React.Component {
     for (var i = 0; i < this.state.data.length; i++) {
       yAxisData.push(this.state.data[i][`${this.state.categoryY}`]);
     }
-    this.setState({ yAxisData: yAxisData }, () => {
-      this.poolData();
-    });
-  };
-
-  poolData = () => {
-    let pooledXYData = [];
-    for (var i = 0; i < this.state.data.length; i++) {
-      let pairArray = [];
-      pairArray.push(this.state.xAxisData[i]);
-      pairArray.push(this.state.yAxisData[i]);
-      pooledXYData.push(pairArray);
-    }
-    this.setState({ pooledXYData: pooledXYData });
+    this.setState({ yAxisData: yAxisData });
   };
 
   render() {
-    // console.log(this.state.categoryX);
-    // console.log(this.state.xAxisData);
-    // console.log(this.state.pooledXYData);
     return (
       <div>
         <AxisContainer
@@ -157,7 +133,6 @@ class Body extends React.Component {
           planetNames={this.state.planetNames}
           xAxisData={this.state.xAxisData}
           yAxisData={this.state.yAxisData}
-          pooledXYData={this.state.pooledXYData}
         />
       </div>
     );

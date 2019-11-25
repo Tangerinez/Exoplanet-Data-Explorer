@@ -3,11 +3,6 @@ import "./Histogram.css";
 import * as d3 from "d3";
 
 class Histogram extends React.Component {
-  state = {
-    width: 0,
-    height: 0
-  };
-
   shouldComponentUpdate(nextProps) {
     if (
       nextProps.xAxisData === this.props.xAxisData &&
@@ -35,7 +30,7 @@ class Histogram extends React.Component {
   groupData = data => {
     let max = Math.max(...data); // max of props data
     let dataByInterval = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    let scaledDownData = []; // new data array scaled down by 100
+    let scaledDownData = []; // new data array scaled down
     let rangesArray = []; // contains the intervals
 
     if (max >= 10000) {
@@ -107,6 +102,12 @@ class Histogram extends React.Component {
     return dataByInterval;
   };
 
+  median = arr => {
+    const mid = Math.floor(arr.length / 2),
+      nums = [...arr].sort((a, b) => a - b);
+    return arr.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2;
+  };
+
   drawBarChart = data => {
     let scaledData;
     if (this.props.xAxis) {
@@ -117,11 +118,7 @@ class Histogram extends React.Component {
 
     let width = 280;
     let height = 300;
-    let total = 0;
-    for (var i = 0; i < scaledData.length; i++) {
-      total += scaledData[i];
-    }
-    let avg = total / scaledData.length;
+
     let xMax;
     let decimalUnit = "";
     let dividedUnit = "";
@@ -140,10 +137,10 @@ class Histogram extends React.Component {
     } else {
       xMax = Math.max(...data) * 10;
       decimalUnit += "10";
-      dividedUnit += "*0.1";
+      dividedUnit += "0.1";
     }
 
-    var yMax = avg;
+    var yMax = this.median(scaledData);
     // Append SVG
     var svg = d3
       .select(this.refs.canvas)
@@ -155,7 +152,7 @@ class Histogram extends React.Component {
     // Create scale
     var xscale = d3
       .scaleLinear()
-      .domain([0, xMax / 100])
+      .domain([0, xMax])
       .range([0, width]);
 
     var yscale = d3

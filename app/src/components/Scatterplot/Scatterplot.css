@@ -1,19 +1,27 @@
 .scatterplot-container {
-  padding: 1.5em;
+  padding: 1.5em 0;
   background: white;
-  font-size: 16px;
+}
+
+.scatter-title {
+  font-weight: bold;
+  font-size: 20px;
+  margin-left: 2em;
 }
 
 .scatterplot {
-  margin-top: 1em;
+  margin: 2em 2em 0 2em;
 }
 
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
+.svg-scatter-container {
+  width: 105%;
 }
-.dot {
-  stroke: #000;
+
+@media only screen and (min-width: 850px) {
+  .scatterplot {
+    text-align: center;
+  }
+  .svg-scatter-container {
+    width: 90%;
+  }
 }
