@@ -11,14 +11,14 @@ class DropdownList extends React.Component {
           {this.props.startingCategory}
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          {this.props.xAxis
+          {this.props.xAxis // ternary to check if the dropdown is x-axis or y-axis
             ? categories.map((item, i) => (
                 <input
                   className="input-category"
                   type="text"
                   value={item}
                   key={i}
-                  onClick={this.props.handleCategoryX}
+                  onClick={this.props.handleCategoryX} // handler for x-axis dropdown
                   readOnly
                 />
               ))
@@ -28,7 +28,7 @@ class DropdownList extends React.Component {
                   type="text"
                   value={item}
                   key={i}
-                  onClick={this.props.handleCategoryY}
+                  onClick={this.props.handleCategoryY} // handler for y-axis dropdown
                   readOnly
                 />
               ))}

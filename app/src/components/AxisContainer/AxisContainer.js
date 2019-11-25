@@ -13,6 +13,7 @@ class AxisContainer extends React.Component {
 
   leftBorderUpdate = () => {
     if (window.innerWidth >= 768) {
+      // Add border at 768px between x and y histogram
       this.setState({
         leftBorderStyle: "3px solid black"
       });

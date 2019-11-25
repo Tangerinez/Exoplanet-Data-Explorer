@@ -16,6 +16,7 @@ class Body extends React.Component {
 
   componentDidMount() {
     d3.csv(data).then(data => {
+      // load csv data and convert string numbers into numbers
       data.forEach(d => {
         d["P. Appar Size (deg)"] = +d["P. Appar Size (deg)"];
         d["P. Density (EU)"] = +d["P. Density (EU)"];
@@ -62,6 +63,7 @@ class Body extends React.Component {
   }
 
   initializeData = result => {
+    // pass loaded data into state
     let xAxisData = [];
     let yAxisData = [];
     let planetNames = [];
@@ -79,6 +81,7 @@ class Body extends React.Component {
   };
 
   handleCategoryX = event => {
+    // handle dropDown for x-axis
     this.setState(
       {
         categoryX: event.target.value
@@ -90,6 +93,7 @@ class Body extends React.Component {
   };
 
   handleCategoryY = event => {
+    // handle dropDown for y-axis
     this.setState(
       {
         categoryY: event.target.value
@@ -101,6 +105,7 @@ class Body extends React.Component {
   };
 
   updateX = () => {
+    // update selected x-axis data
     let xAxisData = [];
     for (var i = 0; i < this.state.data.length; i++) {
       xAxisData.push(this.state.data[i][`${this.state.categoryX}`]);
@@ -109,6 +114,7 @@ class Body extends React.Component {
   };
 
   updateY = () => {
+    // update selected y-axis data
     let yAxisData = [];
     for (var i = 0; i < this.state.data.length; i++) {
       yAxisData.push(this.state.data[i][`${this.state.categoryY}`]);

@@ -17,6 +17,7 @@ class Histogram extends React.Component {
 
   componentDidUpdate() {
     if (this.props.xAxis) {
+      // check if histogram is x or y data
       this.drawBarChart(this.props.xAxisData);
     } else {
       this.drawBarChart(this.props.yAxisData);
@@ -24,14 +25,16 @@ class Histogram extends React.Component {
   }
 
   removeSVG = () => {
+    // prevent duplicate svg elements
     d3.select(".svg-container").remove();
   };
 
   groupData = data => {
-    let max = Math.max(...data); // max of props data
+    // sorts original data into an array based off of ranges generated dynamically
+    let max = Math.max(...data);
     let dataByInterval = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    let scaledDownData = []; // new data array scaled down
-    let rangesArray = []; // contains the intervals
+    let scaledDownData = []; // scaled down data based on max
+    let rangesArray = []; // interval ranges
 
     if (max >= 10000) {
       for (var i = 0; i < data.length; i++) {
@@ -78,7 +81,6 @@ class Histogram extends React.Component {
         }
       }
     }
-
     rangesArray.pop();
 
     for (var z = 0; z < 13; z++) {
@@ -97,7 +99,7 @@ class Histogram extends React.Component {
           }
         }
       }
-      dataByInterval.splice(z, 1, count);
+      dataByInterval.splice(z, 1, count); // places the amount of data within that interval range into an array
     }
     return dataByInterval;
   };
@@ -109,6 +111,7 @@ class Histogram extends React.Component {
   };
 
   drawBarChart = data => {
+    // instatiate histogram
     let scaledData;
     if (this.props.xAxis) {
       scaledData = this.groupData(this.props.xAxisData);
@@ -122,6 +125,7 @@ class Histogram extends React.Component {
     let xMax;
     let decimalUnit = "";
     let dividedUnit = "";
+
     if (Math.max(...data) > 10000) {
       xMax = Math.max(...data) / 100;
       decimalUnit += "0.01";

@@ -26,6 +26,7 @@ class Scatterplot extends React.Component {
   };
 
   poolData = (x, y) => {
+    // combine x and y data into array of arrays [[],[],[]]
     let pooledXYData = [];
     for (var i = 0; i < x.length; i++) {
       let pairArray = [];
@@ -37,10 +38,12 @@ class Scatterplot extends React.Component {
   };
 
   removeSVG = () => {
+    // prevent duplicate svg elements
     d3.select(".svg-scatter-container").remove();
   };
 
   scaleDownData = data => {
+    // scale down data dynamically based off of max
     let max = Math.max(...data);
     let scaledDownData = [];
     if (max >= 10000) {
@@ -64,11 +67,12 @@ class Scatterplot extends React.Component {
   };
 
   drawScatterplot = (xPropsData, yPropsData) => {
+    // instantiates scatterplot
     const scaledXData = this.scaleDownData(this.props.xAxisData);
     const scaledYData = this.scaleDownData(this.props.yAxisData);
     const pooledXYData = this.poolData(scaledXData, scaledYData);
 
-    const height = 750;
+    const height = 650;
     const width = 650;
 
     let xMax;
@@ -194,8 +198,6 @@ class Scatterplot extends React.Component {
   };
 
   render() {
-    console.log(this.poolData(this.props.xAxisData, this.props.yAxisData));
-    console.log(this.props.planetNames);
     return (
       <div className="scatterplot-container">
         <div className="scatter-title">
