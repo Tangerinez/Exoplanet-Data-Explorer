@@ -9,9 +9,15 @@ class Body extends React.Component {
     categoryX: "P. Min Mass (EU)",
     categoryY: "P. Mass (EU)",
     planetName: "1RXS 1609 b",
-    data: null,
-    xAxisData: null,
-    yAxisData: null
+    data: [],
+    pooledXYData: [
+      [1, 1],
+      [2, 2],
+      [3, 3]
+    ],
+    planetNames: [],
+    xAxisData: [1, 2, 3],
+    yAxisData: [1, 2, 3]
   };
 
   componentDidMount() {
@@ -27,10 +33,14 @@ class Body extends React.Component {
         d["P. HZC"] = +d["P. HZC"];
         d["P. HZD"] = +d["P. HZD"];
         d["P. HZI"] = +d["P. HZI"];
+        d["P. Inclination (deg)"] = +d["P. Inclination (deg)"];
         d["P. Min Mass (EU)"] = +d["P. Min Mass (EU)"];
         d["P. Mag"] = +d["P. Mag"];
         d["P. Mass (EU)"] = +d["P. Mass (EU)"];
         d["P. Mean Distance (AU)"] = +d["P. Mean Distance (AU)"];
+        d["P. Omega (deg)"] = +d["P. Omega (deg)"];
+        d["P. Radius (EU)"] = +d["P. Radius (EU)"];
+        d["P. Sem Major Axis (EU)"] = +d["P. Sem Major Axis (EU)"];
         d["P. SFlux Max (EU)"] = +d["P. SFlux Max (EU)"];
         d["P. SFlux Mean (EU)"] = +d["P. SFlux Mean (EU)"];
         d["P. SFlux Min (EU)"] = +d["P. SFlux Min (EU)"];
@@ -39,7 +49,8 @@ class Body extends React.Component {
         d["P. Teq Max (K)"] = +d["P. Teq Max (K)"];
         d["P. Teq Mean (K)"] = +d["P. Teq Mean (K)"];
         d["P. Teq Min (K)"] = +d["P. Teq Min (K)"];
-        d["S. Age (Gyrs)"] = +d["S. Age (Gyrs)"];
+        d["S. Age (Gyrs)"] = -d["S. Age (Gyrs)"];
+        d["S. Appar Mag"] = +d["S. Appar Mag"];
         d["S. DEC (deg)"] = +d["S. DEC (deg)"];
         d["S. Distance (pc)"] = +d["S. Distance (pc)"];
         d["S. Hab Zone Max (AU)"] = +d["S. Hab Zone Max (AU)"];
@@ -52,40 +63,84 @@ class Body extends React.Component {
         d["S. Size from Planet (deg)"] = +d["S. Size from Planet (deg)"];
         d["S. Teff (K)"] = +d["S. Teff (K)"];
       });
-      this.updateData(data);
+      this.initializeData(data);
     });
   }
 
-  updateData = result => {
-    let xStartingData = [];
-    let yStartingData = [];
+  initializeData = result => {
+    let xAxisData = [];
+    let yAxisData = [];
+    let planetNames = [];
     for (var i = 0; i < result.length; i++) {
-      xStartingData.push(result[i]["P. Min Mass (EU)"]);
-      yStartingData.push(result[i]["P. Mass (EU)"]);
+      xAxisData.push(result[i]["P. Min Mass (EU)"]);
+      yAxisData.push(result[i]["P. Mass (EU)"]);
+      planetNames.push(result[i]["P. Name"]);
     }
     this.setState({
       data: result,
-      xAxisData: xStartingData,
-      yAxisData: yStartingData
+      xAxisData: xAxisData,
+      yAxisData: yAxisData,
+      planetNames: planetNames
     });
   };
 
   handleCategoryX = event => {
-    this.setState({
-      categoryX: event.target.value
-    });
+    this.setState(
+      {
+        categoryX: event.target.value
+      },
+      () => {
+        this.updateX();
+      }
+    );
   };
 
   handleCategoryY = event => {
-    this.setState({
-      categoryY: event.target.value
+    this.setState(
+      {
+        categoryY: event.target.value
+      },
+      () => {
+        this.updateY();
+      }
+    );
+  };
+
+  updateX = () => {
+    let xAxisData = [];
+    for (var i = 0; i < this.state.data.length; i++) {
+      xAxisData.push(this.state.data[i][`${this.state.categoryX}`]);
+    }
+    this.setState({ xAxisData: xAxisData }, () => {
+      this.poolData();
     });
   };
 
+  updateY = () => {
+    let yAxisData = [];
+    for (var i = 0; i < this.state.data.length; i++) {
+      yAxisData.push(this.state.data[i][`${this.state.categoryY}`]);
+    }
+    this.setState({ yAxisData: yAxisData }, () => {
+      this.poolData();
+    });
+  };
+
+  poolData = () => {
+    let pooledXYData = [];
+    for (var i = 0; i < this.state.data.length; i++) {
+      let pairArray = [];
+      pairArray.push(this.state.xAxisData[i]);
+      pairArray.push(this.state.yAxisData[i]);
+      pooledXYData.push(pairArray);
+    }
+    this.setState({ pooledXYData: pooledXYData });
+  };
+
   render() {
-    console.log(this.state.data);
-    console.log(this.state.xAxisData);
-    console.log(this.state.yAxisData);
+    // console.log(this.state.categoryX);
+    // console.log(this.state.xAxisData);
+    // console.log(this.state.pooledXYData);
     return (
       <div>
         <AxisContainer
@@ -93,10 +148,16 @@ class Body extends React.Component {
           categoryY={this.state.categoryY}
           handleCategoryX={this.handleCategoryX}
           handleCategoryY={this.handleCategoryY}
+          xAxisData={this.state.xAxisData}
+          yAxisData={this.state.yAxisData}
         />
         <Scatterplot
           categoryX={this.state.categoryX}
           categoryY={this.state.categoryY}
+          planetNames={this.state.planetNames}
+          xAxisData={this.state.xAxisData}
+          yAxisData={this.state.yAxisData}
+          pooledXYData={this.state.pooledXYData}
         />
       </div>
     );

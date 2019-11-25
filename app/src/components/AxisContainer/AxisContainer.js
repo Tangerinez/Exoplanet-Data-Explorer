@@ -28,15 +28,21 @@ class AxisContainer extends React.Component {
           title="X-Axis"
           startingCategory={this.props.categoryX}
           handleCategoryX={this.props.handleCategoryX}
+          handleCategoryY={this.props.handleCategoryY}
           xAxis={true}
+          xAxisData={this.props.xAxisData}
+          yAxisData={this.props.yAxisData}
         />
         <Axis
           title="Y-Axis"
           startingCategory={this.props.categoryY}
           leftBorderStyle={this.state.leftBorderStyle}
           isDesktop={this.state.isDesktop}
+          handleCategoryX={this.props.handleCategoryX}
           handleCategoryY={this.props.handleCategoryY}
           xAxis={false}
+          xAxisData={this.props.xAxisData}
+          yAxisData={this.props.yAxisData}
         />
       </div>
     );
