@@ -11,5 +11,8 @@ Exoplanet Data Explorer built with React.js and D3.js
 - cd into the "app" directory, and ```npm install``` the dependencies
 - To run the repository on your local machine after installing dependencies, in the same directory, run ```npm start```
 
+## Improvements that still need to be made
+- Fix scale on axis so that the points are more visually correct
+- Add labels for each point in the scatterplot
 
 
